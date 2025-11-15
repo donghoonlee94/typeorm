@@ -8,6 +8,11 @@ import {
   VersionColumn,
 } from 'typeorm';
 
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
 @Entity()
 export class UserModel {
   // 자동으로 증가하는 값을 사용하고 싶다면 PrimaryGeneratedColumn을 사용하면 된다.
@@ -41,6 +46,13 @@ export class UserModel {
     unique: false,
   })
   title: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.USER,
+  })
+  role: UserRole | null;
 
   // 데이터가 생성되는 날까지 표시하고 싶다면 CreateDateColumn을 사용하면 된다.
   @CreateDateColumn()
